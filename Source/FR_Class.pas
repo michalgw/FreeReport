@@ -505,6 +505,7 @@ type
     FPageNumbers: String;
     FCopies: Integer;
     FCurPage: TfrPage;
+    FOnClosePreview: TNotifyEvent;
     function FormatValue(V: Variant; Format: Integer;
       const FormatStr: String): String;
     procedure OnGetParsFunction(const name: String; p1, p2, p3: Variant;
@@ -530,6 +531,7 @@ type
     FinalPass: Boolean;
     FileName: String;
     FR3Stream: Boolean;
+    PreviewForm: TForm;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     // service methods
@@ -574,6 +576,9 @@ type
     procedure PrintPreparedReport(PageNumbers: String; Copies: Integer);
     function ChangePrinter(OldIndex, NewIndex: Integer): Boolean;
     procedure EditPreparedReport(PageIndex: Integer);
+
+    procedure ClosePreview;
+    function IsPreviewVisible: Boolean;
     //
     property Pages: TfrPages read FPages;
     property EMFPages: TfrEMFPages read FEMFPages write FEMFPages;
@@ -604,6 +609,7 @@ type
     property OnBeginColumn: TBeginColumnEvent read FOnBeginColumn write FOnBeginColumn;
     property OnPrintColumn: TPrintColumnEvent read FOnPrintColumn write FOnPrintColumn;
     property OnManualBuild: TManualBuildEvent read FOnManualBuild write FOnManualBuild;
+    property OnClosePreview: TNotifyEvent read FOnClosePreview write FOnClosePreview;
   end;
 
   TfrCompositeReport = class(TfrReport)
@@ -6694,6 +6700,17 @@ begin
     frDesigner.Page := Pages[0];
     frDesigner.RedrawPage;
   end;
+end;
+
+procedure TfrReport.ClosePreview;
+begin
+  if Assigned(PreviewForm) and PreviewForm.Visible then
+    PreviewForm.Close;
+end;
+
+function TfrReport.IsPreviewVisible: Boolean;
+begin
+  Result := Assigned(PreviewForm) and PreviewForm.Visible;
 end;
 
 
