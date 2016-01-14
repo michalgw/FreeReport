@@ -516,7 +516,7 @@ begin
   if EMFPages <> nil then
     TfrEMFPages(EMFPages).Free;
   PBox.Free;
-  if Assigned(TfrReport(Doc).OnClosePreview) then
+  if Assigned(Doc) and Assigned(TfrReport(Doc).OnClosePreview) then
     TfrReport(Doc).OnClosePreview(TfrReport(Doc));
 end;
 
