@@ -60,7 +60,15 @@ type
 var
   Prn: TfrPrinter;
 
+procedure InitPrn;
+
 implementation
+
+procedure InitPrn;
+begin
+  Prn := TfrPrinter.Create;
+  Prn.Printer := Printer;
+end;
 
 type
   TPaperInfo = record
@@ -347,8 +355,8 @@ end;
 {----------------------------------------------------------------------------}
 
 initialization
-  Prn := TfrPrinter.Create;
-  Prn.Printer := Printer;
+//  Prn := TfrPrinter.Create;
+//  Prn.Printer := Printer;
 
 finalization
   Prn.Free;
