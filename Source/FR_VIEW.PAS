@@ -921,28 +921,38 @@ begin
 end;
 
 procedure TfrPreviewForm.LoadBtnClick(Sender: TObject);
+var
+  CurDir: String;
 begin
   if EMFPages = nil then Exit;
   OpenDialog.Filter := LoadStr(SRepFile) + ' (*.frp)|*.frp';
+  CurDir := GetCurrentDir;
   with OpenDialog do
    if Execute then
+   begin
+     SetCurrentDir(CurDir);
      LoadFromFile(FileName);
+   end;
 end;
 
 procedure TfrPreviewForm.SaveBtnClick(Sender: TObject);
 var
   i: Integer;
   s: String;
+  CurDir: String;
 begin
   if EMFPages = nil then Exit;
   s := LoadStr(SRepFile) + ' (*.frp)|*.frp';
   for i := 0 to frFiltersCount-1 do
     s := s + '|' + frFilters[i].FilterDesc + '|' + frFilters[i].FilterExt;
+  CurDir := GetCurrentDir;
   with SaveDialog do
   begin
     Filter := s;
     FilterIndex := 1;
     if Execute then
+    begin
+      SetCurrentDir(CurDir);
       if FilterIndex = 1 then
         SaveToFile(FileName)
       else
@@ -952,6 +962,7 @@ begin
           ChangeFileExt(FileName, Copy(frFilters[FilterIndex - 2].FilterExt, 2, 255)));
         Connect(Doc);
       end;
+    end;
   end;
 end;
 
