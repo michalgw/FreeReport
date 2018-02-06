@@ -1536,7 +1536,7 @@ type
 const
   gl: set of Char = ['À', 'Å', '¨', 'È', 'Î', 'Ó', 'Û', 'Ý', 'Þ', 'ß'];
   r_sogl: set of Char = ['Ú', 'Ü'];
-  spaces: set of Char = [' ', '.', ',', '-'];
+  spaces: set of Char = [' ', '.', ',', '-','\','/',':',';','_','+','0'..'9'];
 
 function BreakWord(s: String): TWordBreaks;
 var
