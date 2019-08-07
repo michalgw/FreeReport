@@ -4727,8 +4727,7 @@ var
             b1 := Bands[btGroupHeader];
             while b1 <> nil do
             begin
-              if (frParser.Calc(b1.GroupCondition) <> b1.LastGroupValue) or
-                b.Dataset.Eof then
+              if b.Dataset.Eof or (frParser.Calc(b1.GroupCondition) <> b1.LastGroupValue) then
               begin
                 ShowBand(b.FooterBand);
                 b2 := Bands[btGroupHeader].LastBand;
